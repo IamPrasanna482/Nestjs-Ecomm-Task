@@ -36,6 +36,7 @@ __decorate([
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.DATE,
+        defaultValue: sequelize_typescript_1.DataType.NOW,
     }),
     __metadata("design:type", Date)
 ], Order.prototype, "order_date", void 0);
@@ -52,7 +53,7 @@ __decorate([
     __metadata("design:type", String)
 ], Order.prototype, "shipping_address", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => user_model_1.User),
+    (0, sequelize_typescript_1.BelongsTo)(() => user_model_1.User, { onDelete: 'CASCADE' }),
     __metadata("design:type", user_model_1.User)
 ], Order.prototype, "user", void 0);
 __decorate([

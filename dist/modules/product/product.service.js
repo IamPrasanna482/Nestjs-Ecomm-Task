@@ -18,11 +18,13 @@ const sequelize_1 = require("@nestjs/sequelize");
 const product_model_1 = require("./product.model");
 const product_repository_1 = require("./product.repository");
 const user_repository_1 = require("../user/user.repository");
+const user_model_1 = require("../user/user.model");
 let ProductService = class ProductService {
-    constructor(productModel, productRepository, userRepository) {
+    constructor(productModel, productRepository, userRepository, userModel) {
         this.productModel = productModel;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.userModel = userModel;
     }
     async canPostProduct(user_id) {
         const user = await this.userRepository.findByPk(user_id);
@@ -32,14 +34,20 @@ let ProductService = class ProductService {
         return this.productRepository.createProduct(productInfo);
     }
     async findAll(page, limit, queryParams) {
-        return this.productRepository.getAllProducts(page, limit, queryParams);
+        const user = this.userRepository.findByPk(queryParams.seller_id);
+        if ((await user).role != 'seller') {
+            throw new common_1.HttpException('Only sellers can access their products !', common_1.HttpStatus.BAD_REQUEST);
+        }
+        else
+            return this.productRepository.getAllProducts(page, limit, queryParams);
     }
 };
 exports.ProductService = ProductService;
 exports.ProductService = ProductService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, sequelize_1.InjectModel)(product_model_1.Product)),
+    __param(3, (0, sequelize_1.InjectModel)(user_model_1.User)),
     __metadata("design:paramtypes", [Object, product_repository_1.ProductRepository,
-        user_repository_1.UserRepository])
+        user_repository_1.UserRepository, Object])
 ], ProductService);
 //# sourceMappingURL=product.service.js.map

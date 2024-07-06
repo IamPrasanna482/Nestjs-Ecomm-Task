@@ -10,7 +10,6 @@ import {
 import { User } from '../user/user.model';
 import { Product } from '../product/product.model';
 import { OrderProduct } from '../common/order-product.model';
-// import { OrderProduct } from '../order-product/order-product.model';
 
 @Table
 export class Order extends Model<Order> {
@@ -30,7 +29,7 @@ export class Order extends Model<Order> {
 
   @Column({
     type: DataType.DATE,
-    // allowNull: false,
+    defaultValue: DataType.NOW,
   })
   order_date: Date;
 
@@ -43,7 +42,7 @@ export class Order extends Model<Order> {
   @Column
   shipping_address: string;
 
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, { onDelete: 'CASCADE' })
   user: User;
 
   @BelongsToMany(() => Product, () => OrderProduct)

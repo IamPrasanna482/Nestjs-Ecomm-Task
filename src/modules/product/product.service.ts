@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Product } from './product.model';
 import { CreateProductDto, GetProductBySellerDto } from './dto/product.dto';
 import { ProductRepository } from './product.repository';
 import { UserRepository } from '../user/user.repository';
+import { User } from '../user/user.model';
 
 @Injectable()
 export class ProductService {
@@ -12,6 +13,8 @@ export class ProductService {
     private readonly productModel: typeof Product,
     private readonly productRepository: ProductRepository,
     private readonly userRepository: UserRepository,
+    @InjectModel(User)
+    private readonly userModel: typeof User,
   ) {}
 
   async canPostProduct(user_id: string): Promise<boolean> {
@@ -28,9 +31,16 @@ export class ProductService {
   async findAll(
     page: number,
     limit: number,
-    queryParams: GetProductBySellerDto
+    queryParams: GetProductBySellerDto,
   ): Promise<{ rows: Product[]; count: number }> {
-   return this.productRepository.getAllProducts(page,limit,queryParams)
+    const user = this.userRepository.findByPk(queryParams.seller_id);
+    if((await user).role != 'seller'){
+        throw new HttpException(
+          'Only sellers can access their products !',
+          HttpStatus.BAD_REQUEST,
+        );
+    }
+    else return this.productRepository.getAllProducts(page, limit, queryParams);
   }
 
   // async findOne(id: string): Promise<Product> {

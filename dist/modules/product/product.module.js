@@ -14,14 +14,16 @@ const product_service_1 = require("./product.service");
 const product_model_1 = require("./product.model");
 const product_repository_1 = require("./product.repository");
 const user_module_1 = require("../user/user.module");
+const user_model_1 = require("../user/user.model");
 let ProductModule = class ProductModule {
 };
 exports.ProductModule = ProductModule;
 exports.ProductModule = ProductModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            sequelize_1.SequelizeModule.forFeature([product_model_1.Product]),
+            sequelize_1.SequelizeModule.forFeature([product_model_1.Product, user_model_1.User]),
             user_module_1.UserModule,
+            user_model_1.User
         ],
         controllers: [product_controller_1.ProductController],
         providers: [product_service_1.ProductService, product_repository_1.ProductRepository],

@@ -27,7 +27,7 @@ export class UserRepository {
   }
 
   async deleteUser(userId: string): Promise<any> {
-    await this.userModel.destroy({ where: { id: userId } });
+    await this.userModel.destroy({ where: { user_id: userId } });
     return { msg: 'user deleted successfully' };
   }
 
@@ -44,7 +44,7 @@ export class UserRepository {
     queryOptions?: any,
     limit?: number,
     offset?: number,
-    sortBy: string = 'id',
+    sortBy: string = 'user_id',
     order: string = 'ASC',
   ) {
     // get the filtered and sorted users

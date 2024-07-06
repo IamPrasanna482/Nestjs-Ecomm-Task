@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Order } from './order.model';
-import { CreateOrderDto } from './dto/order.dto';
+import { CreateOrderDto, GetOrderParamsDto } from './dto/order.dto';
 import { Product } from '../product/product.model';
 import { User } from '../user/user.model';
 import { DataType } from 'sequelize-typescript';
@@ -73,10 +73,22 @@ export class OrderRepository {
   //     await this.orderModel.destroy({ where: { id } });
   //   }
 
-    async findAllOrders(params): Promise<Order[]> {
-      
-    }
-
+  async findAllOrders(params: GetOrderParamsDto): Promise<Order[]> {
+    return this.orderModel.findAll({
+      where: { customer_id: params.customer_id },
+      include: [
+        {
+          model: User,
+          attributes: ['user_id', 'full_name', 'email'], // Specify user attributes you want to include
+        },
+        {
+          model: Product,
+          through: { attributes: [] }, // This ensures that only Product attributes are returned
+          attributes: ['id', 'name', 'price'], // Specify product attributes you want to include
+        },
+      ],
+    });
+  }
   //   async findOrderById(id: number): Promise<Order> {
   //     return this.orderModel.findByPk(id);
   //   }

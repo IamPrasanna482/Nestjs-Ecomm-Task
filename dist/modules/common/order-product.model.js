@@ -33,14 +33,14 @@ __decorate([
     __metadata("design:type", String)
 ], OrderProduct.prototype, "product_id", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => order_model_1.Order),
+    (0, sequelize_typescript_1.BelongsTo)(() => order_model_1.Order, { onDelete: 'CASCADE' }),
     __metadata("design:type", order_model_1.Order)
 ], OrderProduct.prototype, "order", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => product_model_1.Product),
+    (0, sequelize_typescript_1.BelongsTo)(() => product_model_1.Product, { onDelete: 'CASCADE' }),
     __metadata("design:type", product_model_1.Product)
 ], OrderProduct.prototype, "product", void 0);
 exports.OrderProduct = OrderProduct = __decorate([
-    (0, sequelize_typescript_1.Table)({})
+    sequelize_typescript_1.Table
 ], OrderProduct);
 //# sourceMappingURL=order-product.model.js.map

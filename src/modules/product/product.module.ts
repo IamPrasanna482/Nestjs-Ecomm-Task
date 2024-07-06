@@ -5,11 +5,13 @@ import { ProductService } from './product.service';
 import { Product } from './product.model';
 import { ProductRepository } from './product.repository';
 import { UserModule } from '../user/user.module';
+import { User } from '../user/user.model';
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([Product]),
+    SequelizeModule.forFeature([Product,User]),
     UserModule, // Import UserModule to access UserRepository
+    User
   ],
   controllers: [ProductController],
   providers: [ProductService, ProductRepository],

@@ -35,7 +35,7 @@ let UserRepository = class UserRepository {
         return await this.userModel.findByPk(userId);
     }
     async deleteUser(userId) {
-        await this.userModel.destroy({ where: { id: userId } });
+        await this.userModel.destroy({ where: { user_id: userId } });
         return { msg: 'user deleted successfully' };
     }
     async findbyEmail(email) {
@@ -45,7 +45,7 @@ let UserRepository = class UserRepository {
             },
         });
     }
-    async getAllUsersByParams(queryOptions, limit, offset, sortBy = 'id', order = 'ASC') {
+    async getAllUsersByParams(queryOptions, limit, offset, sortBy = 'user_id', order = 'ASC') {
         const users = await user_model_1.User.findAll({
             where: queryOptions,
             limit: limit,

@@ -62,6 +62,20 @@ let OrderRepository = class OrderRepository {
         }
     }
     async findAllOrders(params) {
+        return this.orderModel.findAll({
+            where: { customer_id: params.customer_id },
+            include: [
+                {
+                    model: user_model_1.User,
+                    attributes: ['user_id', 'full_name', 'email'],
+                },
+                {
+                    model: product_model_1.Product,
+                    through: { attributes: [] },
+                    attributes: ['id', 'name', 'price'],
+                },
+            ],
+        });
     }
 };
 exports.OrderRepository = OrderRepository;

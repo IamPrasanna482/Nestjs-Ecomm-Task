@@ -3,13 +3,13 @@ import {
   Column,
   Model,
   ForeignKey,
-  BelongsTo,
   DataType,
+  BelongsTo,
 } from 'sequelize-typescript';
 import { Order } from '../order/order.model';
 import { Product } from '../product/product.model';
 
-@Table({})
+@Table
 export class OrderProduct extends Model<OrderProduct> {
   @ForeignKey(() => Order)
   @Column({
@@ -24,10 +24,10 @@ export class OrderProduct extends Model<OrderProduct> {
     allowNull: false,
   })
   product_id: string;
-
-  @BelongsTo(() => Order)
+  
+  @BelongsTo(() => Order, { onDelete: 'CASCADE' })
   order: Order;
 
-  @BelongsTo(() => Product)
+  @BelongsTo(() => Product, { onDelete: 'CASCADE' })
   product: Product;
 }
