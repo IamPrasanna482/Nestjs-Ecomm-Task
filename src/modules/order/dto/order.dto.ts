@@ -51,7 +51,7 @@ export class CreateOrderDto {
   customer_id: string;
 
   @IsString()
-  address: string;
+  shipping_address: string;
 
   @IsArray()
   @IsNotEmpty()
@@ -80,3 +80,12 @@ export class GetOrderParamsDto {
 }
 
 
+export class updateOrderDto {
+  @IsString()
+  @IsOptional()
+  shipping_address: string;
+
+  @IsString()
+  @IsOptional()
+  status: string;
+}

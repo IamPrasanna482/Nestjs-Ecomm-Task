@@ -26,7 +26,6 @@ export class ProductService {
     return this.productRepository.createProduct(productInfo);
   }
 
-  // Uncomment and update the methods as needed
 
   async findAll(
     page: number,
@@ -43,24 +42,23 @@ export class ProductService {
     else return this.productRepository.getAllProducts(page, limit, queryParams);
   }
 
-  // async findOne(id: string): Promise<Product> {
-  //   const product = await this.productModel.findByPk(id);
-  //   if (!product) {
-  //     throw new NotFoundException('Product not found');
-  //   }
-  //   return product;
-  // }
+  async findOne(id: string): Promise<Product> {
+    const product = await this.productRepository.findProduct(id);
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+    return product;
+  }
 
-  // async update(
-  //   id: string,
-  //   updateProductDto: Partial<CreateProductDto>,
-  // ): Promise<Product> {
-  //   const product = await this.findOne(id);
-  //   return product.update(updateProductDto);
-  // }
+  async update(
+    id: string,
+    updateProductDto: Partial<CreateProductDto>,
+  ): Promise<Product> {
+    
+    return this.productRepository.updateProduct(id,updateProductDto);
+  }
 
-  // async remove(id: string): Promise<void> {
-  //   const product = await this.findOne(id);
-  //   await product.destroy();
-  // }
+  async remove(id: string): Promise<void> {
+    const product = await this.productRepository.deleteProduct(id);
+  }
 }

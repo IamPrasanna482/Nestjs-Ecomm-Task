@@ -41,6 +41,19 @@ let ProductService = class ProductService {
         else
             return this.productRepository.getAllProducts(page, limit, queryParams);
     }
+    async findOne(id) {
+        const product = await this.productRepository.findProduct(id);
+        if (!product) {
+            throw new common_1.NotFoundException('Product not found');
+        }
+        return product;
+    }
+    async update(id, updateProductDto) {
+        return this.productRepository.updateProduct(id, updateProductDto);
+    }
+    async remove(id) {
+        const product = await this.productRepository.deleteProduct(id);
+    }
 };
 exports.ProductService = ProductService;
 exports.ProductService = ProductService = __decorate([

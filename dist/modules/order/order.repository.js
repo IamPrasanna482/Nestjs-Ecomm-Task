@@ -43,7 +43,7 @@ let OrderRepository = class OrderRepository {
                 order_date: new Date(),
                 total_amount: totalAmount,
                 status: 'Pending',
-                shipping_address: orderDto.address,
+                shipping_address: orderDto.shipping_address,
                 customer_id: orderDto.customer_id,
             }, { transaction });
             for (const product of products) {
@@ -61,6 +61,13 @@ let OrderRepository = class OrderRepository {
             throw error;
         }
     }
+    async deleteOrder(id) {
+        const result = await this.orderModel.destroy({ where: { id } });
+        if (!result) {
+            throw new common_1.HttpException('Order not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        throw new common_1.HttpException('Order deleted successfully', common_1.HttpStatus.OK);
+    }
     async findAllOrders(params) {
         return this.orderModel.findAll({
             where: { customer_id: params.customer_id },
@@ -76,6 +83,16 @@ let OrderRepository = class OrderRepository {
                 },
             ],
         });
+    }
+    async findOrder(id) {
+        return this.orderModel.findByPk(id);
+    }
+    async updateOrder(id, updateOrderDto) {
+        const order = await order_model_1.Order.findByPk(id);
+        if (!order) {
+            throw new common_1.NotFoundException('Order not found');
+        }
+        return order.update(updateOrderDto);
     }
 };
 exports.OrderRepository = OrderRepository;

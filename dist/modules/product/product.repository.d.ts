@@ -10,4 +10,7 @@ export declare class ProductRepository {
         rows: Product[];
         count: number;
     }>;
+    updateProduct(id: string, updateProductDto: Partial<CreateProductDto>): Promise<Product>;
+    deleteProduct(id: string): Promise<void>;
+    findProduct(id: string): Promise<Product>;
 }

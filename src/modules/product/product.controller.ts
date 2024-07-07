@@ -35,7 +35,6 @@ export class ProductController {
     }
   }
 
-  // Uncomment and implement these methods if needed
   @Get()
   async findAll(
     @Query('page') page: number = 1,
@@ -45,21 +44,21 @@ export class ProductController {
     return this.productService.findAll(page, limit, queryParams);
   }
 
-  // @Get(':id')
-  // async findOne(@Param('id') id: string): Promise<Product> {
-  //   return this.productService.findOne(id);
-  // }
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Product> {
+    return this.productService.findOne(id);
+  }
 
-  // @Put(':id')
-  // async update(
-  //   @Param('id') id: string,
-  //   @Body() updateProductDto: Partial<CreateProductDto>,
-  // ): Promise<Product> {
-  //   return this.productService.update(id, updateProductDto);
-  // }
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateProductDto: Partial<CreateProductDto>,
+  ): Promise<Product> {
+    return this.productService.update(id, updateProductDto);
+  }
 
-  // @Delete(':id')
-  // async remove(@Param('id') id: string): Promise<void> {
-  //   return this.productService.remove(id);
-  // }
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<void> {
+    return this.productService.remove(id);
+  }
 }

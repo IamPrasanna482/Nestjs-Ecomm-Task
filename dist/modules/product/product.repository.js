@@ -29,7 +29,30 @@ let ProductRepository = class ProductRepository {
         return await product_model_1.Product.findAndCountAll({
             offset: (page - 1) * limit,
             limit,
+            where: {
+                rating: queryParams.rating
+            }
         });
+    }
+    async updateProduct(id, updateProductDto) {
+        const product = await product_model_1.Product.findByPk(id);
+        if (!product) {
+            throw new common_1.NotFoundException('Product not found');
+        }
+        const { user_id } = updateProductDto;
+        if (product.user_id != user_id) {
+            throw new common_1.UnauthorizedException('Only the owner can update the product !');
+        }
+        return product.update(updateProductDto);
+    }
+    async deleteProduct(id) {
+        const result = await product_model_1.Product.destroy({ where: { id } });
+        if (!result) {
+            throw new common_1.NotFoundException('Product not found');
+        }
+    }
+    async findProduct(id) {
+        return product_model_1.Product.findByPk(id);
     }
 };
 exports.ProductRepository = ProductRepository;

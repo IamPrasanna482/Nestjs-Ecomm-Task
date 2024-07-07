@@ -31,4 +31,8 @@ export class GetProductBySellerDto{
   @IsOptional()
   @IsUUID()
   seller_id: string
+
+  @IsOptional()
+  @IsNumber()
+  rating: number
 }

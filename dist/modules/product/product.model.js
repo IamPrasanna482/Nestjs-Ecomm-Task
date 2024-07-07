@@ -32,6 +32,7 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "user_id", void 0);
 __decorate([
+    (0, sequelize_typescript_1.Index)('product_name'),
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], Product.prototype, "name", void 0);
@@ -56,7 +57,9 @@ __decorate([
     __metadata("design:type", Number)
 ], Product.prototype, "rating", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => user_model_1.User),
+    (0, sequelize_typescript_1.BelongsTo)(() => user_model_1.User, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", user_model_1.User)
 ], Product.prototype, "user", void 0);
 exports.Product = Product = __decorate([

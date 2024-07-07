@@ -26,6 +26,7 @@ __decorate([
     __metadata("design:type", String)
 ], Order.prototype, "id", void 0);
 __decorate([
+    (0, sequelize_typescript_1.Index)('customer_id'),
     (0, sequelize_typescript_1.ForeignKey)(() => user_model_1.User),
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.UUID,
@@ -41,6 +42,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Order.prototype, "order_date", void 0);
 __decorate([
+    (0, sequelize_typescript_1.Index)('status'),
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], Order.prototype, "status", void 0);

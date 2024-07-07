@@ -1,15 +1,13 @@
 // src/orders/order.repository.ts
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Order } from './order.model';
-import { CreateOrderDto, GetOrderParamsDto } from './dto/order.dto';
+import { CreateOrderDto, GetOrderParamsDto, updateOrderDto } from './dto/order.dto';
 import { Product } from '../product/product.model';
 import { User } from '../user/user.model';
-import { DataType } from 'sequelize-typescript';
 import { OrderProduct } from '../common/order-product.model';
 import { Sequelize } from 'sequelize-typescript';
 
-// import { UpdateOrderDto } from './dto/update-order.dto';
 
 @Injectable()
 export class OrderRepository {
@@ -44,7 +42,7 @@ export class OrderRepository {
           order_date: new Date(),
           total_amount: totalAmount,
           status: 'Pending',
-          shipping_address: orderDto.address,
+          shipping_address: orderDto.shipping_address,
           customer_id: orderDto.customer_id,
         },
         { transaction },
@@ -69,9 +67,13 @@ export class OrderRepository {
     }
   }
 
-  //   async deleteOrder(id: number): Promise<void> {
-  //     await this.orderModel.destroy({ where: { id } });
-  //   }
+  async deleteOrder(id: number): Promise<void> {
+    const result = await this.orderModel.destroy({ where: { id } });
+    if (!result) {
+      throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
+    }
+    throw new HttpException('Order deleted successfully', HttpStatus.OK);
+  }
 
   async findAllOrders(params: GetOrderParamsDto): Promise<Order[]> {
     return this.orderModel.findAll({
@@ -89,18 +91,20 @@ export class OrderRepository {
       ],
     });
   }
-  //   async findOrderById(id: number): Promise<Order> {
-  //     return this.orderModel.findByPk(id);
-  //   }
+  async findOrder(id: number): Promise<Order> {
+    return this.orderModel.findByPk(id);
+  }
 
-  //   async updateOrder(
-  //     id: number,
-  //     updateOrderDto: UpdateOrderDto,
-  //   ): Promise<Order> {
-  //     const order = await this.findOrderById(id);
-  //     return order.update(updateOrderDto);
-  //   }
-
+  async updateOrder(
+    id: number,
+    updateOrderDto: updateOrderDto,
+  ): Promise<Order> {
+    const order = await Order.findByPk(id);
+    if (!order) {
+      throw new NotFoundException('Order not found');
+    }
+    return order.update(updateOrderDto);
+  }
   //   async findOrdersByUserId(userId: number): Promise<Order[]> {
   //     return this.orderModel.findAll({ where: { user_id } });
   //   }

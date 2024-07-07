@@ -8,4 +8,5 @@ export declare class CreateProductDto {
 }
 export declare class GetProductBySellerDto {
     seller_id: string;
+    rating: number;
 }

@@ -25,8 +25,21 @@ let OrderService = class OrderService {
     async createOrder(createOrderDto) {
         return this.orderRepository.createOrder(createOrderDto);
     }
+    async deleteOrder(id) {
+        return this.orderRepository.deleteOrder(id);
+    }
     async getAllOrders(params) {
         return this.orderRepository.findAllOrders(params);
+    }
+    async getOrderById(id) {
+        const order = await this.orderRepository.findOrder(id);
+        if (!order) {
+            throw new common_1.NotFoundException('Order not found');
+        }
+        return order;
+    }
+    async updateOrder(id, updateOrderDto) {
+        return this.orderRepository.updateOrder(id, updateOrderDto);
     }
 };
 exports.OrderService = OrderService;

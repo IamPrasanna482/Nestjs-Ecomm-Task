@@ -23,8 +23,17 @@ let OrderController = class OrderController {
     async createOrder(createOrderDto) {
         return this.orderService.createOrder(createOrderDto);
     }
+    async deleteOrder(id) {
+        return this.orderService.deleteOrder(id);
+    }
     async getAllOrders(params) {
         return this.orderService.getAllOrders(params);
+    }
+    async getOrderById(id) {
+        return this.orderService.getOrderById(id);
+    }
+    async updateOrder(id, updateOrderDto) {
+        return this.orderService.updateOrder(id, updateOrderDto);
     }
 };
 exports.OrderController = OrderController;
@@ -36,12 +45,34 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "createOrder", null);
 __decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "deleteOrder", null);
+__decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [order_dto_1.GetOrderParamsDto]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "getAllOrders", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "getOrderById", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, order_dto_1.updateOrderDto]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "updateOrder", null);
 exports.OrderController = OrderController = __decorate([
     (0, common_1.Controller)('orders'),
     __metadata("design:paramtypes", [order_service_1.OrderService])

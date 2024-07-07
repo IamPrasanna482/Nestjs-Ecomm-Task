@@ -5,10 +5,9 @@ import {
   BelongsTo,
   ForeignKey,
   DataType,
-  AllowNull,
+  Index,
 } from 'sequelize-typescript';
 import { User } from '../user/user.model';
-import { UUID } from 'crypto';
 
 @Table
 export class Product extends Model<Product> {
@@ -26,6 +25,7 @@ export class Product extends Model<Product> {
   })
   user_id: string;
 
+  @Index('product_name')
   @Column
   name: string;
 
@@ -45,10 +45,8 @@ export class Product extends Model<Product> {
   })
   rating?: number;
 
-  // @ForeignKey(() => User)
-  // @Column
-  // user_id: number;
-
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 }

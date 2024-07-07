@@ -52,4 +52,9 @@ __decorate([
     (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
 ], GetProductBySellerDto.prototype, "seller_id", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], GetProductBySellerDto.prototype, "rating", void 0);
 //# sourceMappingURL=product.dto.js.map

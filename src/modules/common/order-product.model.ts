@@ -11,6 +11,13 @@ import { Product } from '../product/product.model';
 
 @Table
 export class OrderProduct extends Model<OrderProduct> {
+  @Column({
+    type: DataType.UUID,
+    primaryKey: true,
+    defaultValue: DataType.UUIDV4,
+  })
+  id: string;
+
   @ForeignKey(() => Order)
   @Column({
     type: DataType.UUID,
@@ -24,10 +31,10 @@ export class OrderProduct extends Model<OrderProduct> {
     allowNull: false,
   })
   product_id: string;
-  
-  @BelongsTo(() => Order, { onDelete: 'CASCADE' })
+
+  @BelongsTo(() => Order, { onDelete: 'CASCADE', hooks: true })
   order: Order;
 
-  @BelongsTo(() => Product, { onDelete: 'CASCADE' })
+  @BelongsTo(() => Product, { onDelete: 'CASCADE', hooks: true })
   product: Product;
 }

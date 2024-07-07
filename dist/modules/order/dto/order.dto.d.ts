@@ -5,7 +5,7 @@ declare class OrderProductDto {
 }
 export declare class CreateOrderDto {
     customer_id: string;
-    address: string;
+    shipping_address: string;
     products: OrderProductDto[];
 }
 export declare class GetOrderParamsDto {
@@ -14,5 +14,9 @@ export declare class GetOrderParamsDto {
     offset: number;
     sortBy: string;
     order: string;
+}
+export declare class updateOrderDto {
+    shipping_address: string;
+    status: string;
 }
 export {};

@@ -17,6 +17,14 @@ let OrderProduct = class OrderProduct extends sequelize_typescript_1.Model {
 };
 exports.OrderProduct = OrderProduct;
 __decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.UUID,
+        primaryKey: true,
+        defaultValue: sequelize_typescript_1.DataType.UUIDV4,
+    }),
+    __metadata("design:type", String)
+], OrderProduct.prototype, "id", void 0);
+__decorate([
     (0, sequelize_typescript_1.ForeignKey)(() => order_model_1.Order),
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.UUID,
@@ -33,11 +41,11 @@ __decorate([
     __metadata("design:type", String)
 ], OrderProduct.prototype, "product_id", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => order_model_1.Order, { onDelete: 'CASCADE' }),
+    (0, sequelize_typescript_1.BelongsTo)(() => order_model_1.Order, { onDelete: 'CASCADE', hooks: true }),
     __metadata("design:type", order_model_1.Order)
 ], OrderProduct.prototype, "order", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => product_model_1.Product, { onDelete: 'CASCADE' }),
+    (0, sequelize_typescript_1.BelongsTo)(() => product_model_1.Product, { onDelete: 'CASCADE', hooks: true }),
     __metadata("design:type", product_model_1.Product)
 ], OrderProduct.prototype, "product", void 0);
 exports.OrderProduct = OrderProduct = __decorate([

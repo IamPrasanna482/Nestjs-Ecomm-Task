@@ -6,6 +6,7 @@ import {
   ForeignKey,
   BelongsToMany,
   DataType,
+  Index,
 } from 'sequelize-typescript';
 import { User } from '../user/user.model';
 import { Product } from '../product/product.model';
@@ -20,6 +21,7 @@ export class Order extends Model<Order> {
   })
   id: string;
 
+  @Index('customer_id')
   @ForeignKey(() => User)
   @Column({
     type: DataType.UUID,
@@ -33,6 +35,7 @@ export class Order extends Model<Order> {
   })
   order_date: Date;
 
+  @Index('status')
   @Column
   status: string;
 

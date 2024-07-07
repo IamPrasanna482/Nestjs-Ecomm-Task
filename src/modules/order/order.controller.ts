@@ -10,7 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { CreateOrderDto, GetOrderParamsDto } from './dto/order.dto';
+import { CreateOrderDto, GetOrderParamsDto, updateOrderDto } from './dto/order.dto';
 // import { UpdateOrderD
 import { Order } from './order.model';
 
@@ -23,32 +23,27 @@ export class OrderController {
     return this.orderService.createOrder(createOrderDto);
   }
 
-  //   @Delete(':id')
-  //   async deleteOrder(@Param('id') id: number): Promise<void> {
-  //     return this.orderService.deleteOrder(id);
-  //   }
+    @Delete(':id')
+    async deleteOrder(@Param('id') id: number): Promise<void> {
+      return this.orderService.deleteOrder(id);
+    }
 
   @Get()
   async getAllOrders(@Query() params: GetOrderParamsDto): Promise<Order[]> {
     return this.orderService.getAllOrders(params);
   }
 
-  //   @Get(':id')
-  //   async getOrderById(@Param('id') id: number): Promise<Order> {
-  //     return this.orderService.getOrderById(id);
-  //   }
+    @Get(':id')
+    async getOrderById(@Param('id') id: number): Promise<Order> {
+      return this.orderService.getOrderById(id);
+    }
 
-  // @Put(':id')
-  // async updateOrder(
-  //   @Param('id') id: number,
-  //   @Body() updateOrderDto: UpdateOrderDto,
-  // ): Promise<Order> {
-  //   return this.orderService.updateOrder(id, updateOrderDto);
-  // }
+  @Put(':id')
+  async updateOrder(
+    @Param('id') id: number,
+    @Body() updateOrderDto: updateOrderDto,
+  ): Promise<Order> {
+    return this.orderService.updateOrder(id, updateOrderDto);
+  }
 
-  //   @Get('user/:userId')
-  //   async getOrdersByUserId(@Param('userId') userId: number): Promise<Order[]> {
-  //     return this.orderService.getOrdersByUserId(userId);
-  //   }
-  // }
 }

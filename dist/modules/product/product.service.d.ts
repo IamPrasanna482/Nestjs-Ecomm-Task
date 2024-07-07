@@ -15,4 +15,7 @@ export declare class ProductService {
         rows: Product[];
         count: number;
     }>;
+    findOne(id: string): Promise<Product>;
+    update(id: string, updateProductDto: Partial<CreateProductDto>): Promise<Product>;
+    remove(id: string): Promise<void>;
 }

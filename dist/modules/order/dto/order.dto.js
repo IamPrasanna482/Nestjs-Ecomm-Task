@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetOrderParamsDto = exports.CreateOrderDto = void 0;
+exports.updateOrderDto = exports.GetOrderParamsDto = exports.CreateOrderDto = void 0;
 const class_validator_1 = require("class-validator");
 class OrderProductDto {
 }
@@ -33,7 +33,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateOrderDto.prototype, "address", void 0);
+], CreateOrderDto.prototype, "shipping_address", void 0);
 __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.IsNotEmpty)(),
@@ -65,4 +65,17 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], GetOrderParamsDto.prototype, "order", void 0);
+class updateOrderDto {
+}
+exports.updateOrderDto = updateOrderDto;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], updateOrderDto.prototype, "shipping_address", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], updateOrderDto.prototype, "status", void 0);
 //# sourceMappingURL=order.dto.js.map

@@ -33,6 +33,15 @@ let ProductController = class ProductController {
     async findAll(page = 1, limit = 10, queryParams) {
         return this.productService.findAll(page, limit, queryParams);
     }
+    async findOne(id) {
+        return this.productService.findOne(id);
+    }
+    async update(id, updateProductDto) {
+        return this.productService.update(id, updateProductDto);
+    }
+    async remove(id) {
+        return this.productService.remove(id);
+    }
 };
 exports.ProductController = ProductController;
 __decorate([
@@ -51,6 +60,28 @@ __decorate([
     __metadata("design:paramtypes", [Number, Number, product_dto_1.GetProductBySellerDto]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "remove", null);
 exports.ProductController = ProductController = __decorate([
     (0, common_1.Controller)('products'),
     __metadata("design:paramtypes", [product_service_1.ProductService])

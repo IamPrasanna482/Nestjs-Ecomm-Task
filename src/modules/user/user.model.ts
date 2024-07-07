@@ -1,5 +1,4 @@
-import { Column, DataType, HasMany, IsEmail, IsIn, Model, Table, Unique } from "sequelize-typescript";
-import { IsNotEmpty } from "class-validator";
+import { Column, DataType, HasMany, Index, Model, Table } from "sequelize-typescript";
 import { Product } from "../product/product.model";
 import { Order } from "../order/order.model";
 
@@ -18,6 +17,7 @@ export class User extends Model<User> {
   @Column
   password: string;
 
+  @Index('user_full_name')
   @Column
   full_name: string;
 
@@ -36,6 +36,7 @@ export class User extends Model<User> {
   })
   mobile_number?: string;
 
+  @Index('user_role')
   @Column({
     allowNull: true,
   })
@@ -49,5 +50,5 @@ export class User extends Model<User> {
   @HasMany(() => Order, {
     onDelete: 'CASCADE',
   })
-  orders: Product[];
+  orders: Order[];
 }

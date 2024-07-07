@@ -33,6 +33,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
+    (0, sequelize_typescript_1.Index)('user_full_name'),
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], User.prototype, "full_name", void 0);
@@ -55,6 +56,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "mobile_number", void 0);
 __decorate([
+    (0, sequelize_typescript_1.Index)('user_role'),
     (0, sequelize_typescript_1.Column)({
         allowNull: true,
     }),
