@@ -12,7 +12,7 @@ export declare class OrderRepository {
     private readonly sequelize;
     constructor(orderModel: typeof Order, productModel: typeof Product, userModel: typeof User, orderProductModel: typeof OrderProduct, sequelize: Sequelize);
     createOrder(orderDto: CreateOrderDto): Promise<Order>;
-    deleteOrder(id: number): Promise<void>;
+    deleteOrder(orderId: number): Promise<void>;
     findAllOrders(params: GetOrderParamsDto): Promise<Order[]>;
     findOrder(id: number): Promise<Order>;
     updateOrder(id: number, updateOrderDto: updateOrderDto): Promise<Order>;

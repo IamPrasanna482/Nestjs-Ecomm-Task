@@ -13,15 +13,17 @@ const user_model_1 = require("./user.model");
 const user_service_1 = require("./user.service");
 const user_controller_1 = require("./user.controller");
 const user_repository_1 = require("./user.repository");
+const product_model_1 = require("../product/product.model");
+const order_model_1 = require("../order/order.model");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
 exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        imports: [sequelize_1.SequelizeModule.forFeature([user_model_1.User])],
+        imports: [sequelize_1.SequelizeModule.forFeature([user_model_1.User, product_model_1.Product, order_model_1.Order])],
         providers: [user_service_1.UserService, user_repository_1.UserRepository],
         controllers: [user_controller_1.UserController],
-        exports: [user_repository_1.UserRepository],
+        exports: [user_repository_1.UserRepository, user_service_1.UserService],
     })
 ], UserModule);
 //# sourceMappingURL=user.module.js.map

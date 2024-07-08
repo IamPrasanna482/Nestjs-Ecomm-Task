@@ -45,8 +45,6 @@ export class Product extends Model<Product> {
   })
   rating?: number;
 
-  @BelongsTo(() => User, {
-    onDelete: 'CASCADE',
-  })
+  @BelongsTo(() => User)
   user: User;
 }

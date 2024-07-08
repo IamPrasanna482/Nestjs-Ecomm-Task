@@ -42,13 +42,9 @@ export class User extends Model<User> {
   })
   role: string;
 
-  @HasMany(() => Product, {
-    onDelete: 'CASCADE',
-  })
+  @HasMany(() => Product)
   products: Product[];
 
-  @HasMany(() => Order, {
-    onDelete: 'CASCADE',
-  })
+  @HasMany(() => Order)
   orders: Order[];
 }

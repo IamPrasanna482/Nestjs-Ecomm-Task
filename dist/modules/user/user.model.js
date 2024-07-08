@@ -63,15 +63,11 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
 __decorate([
-    (0, sequelize_typescript_1.HasMany)(() => product_model_1.Product, {
-        onDelete: 'CASCADE',
-    }),
+    (0, sequelize_typescript_1.HasMany)(() => product_model_1.Product),
     __metadata("design:type", Array)
 ], User.prototype, "products", void 0);
 __decorate([
-    (0, sequelize_typescript_1.HasMany)(() => order_model_1.Order, {
-        onDelete: 'CASCADE',
-    }),
+    (0, sequelize_typescript_1.HasMany)(() => order_model_1.Order),
     __metadata("design:type", Array)
 ], User.prototype, "orders", void 0);
 exports.User = User = __decorate([

@@ -36,7 +36,6 @@ export class OrderRepository {
         totalAmount += price * quantity;
       }
 
-      // Create order
       const order = await this.orderModel.create(
         {
           order_date: new Date(),
@@ -48,7 +47,6 @@ export class OrderRepository {
         { transaction },
       );
 
-      // Map products to order in OrderProduct table
       for (const product of products) {
         await this.orderProductModel.create(
           {
@@ -67,12 +65,28 @@ export class OrderRepository {
     }
   }
 
-  async deleteOrder(id: number): Promise<void> {
-    const result = await this.orderModel.destroy({ where: { id } });
-    if (!result) {
-      throw new HttpException('Order not found', HttpStatus.NOT_FOUND);
+  async deleteOrder(orderId: number): Promise<void> {
+    const transaction = await this.sequelize.transaction();
+    let isCommitted = false;
+    try {
+      const order = await this.orderModel.findByPk(orderId);
+      if (!order) throw new NotFoundException('Order not found');
+
+      await this.orderProductModel.destroy({
+        where: { order_id: orderId },
+        transaction,
+      });
+      await order.destroy({ transaction });
+
+      await transaction.commit();
+      isCommitted = true;
+      throw new HttpException('Order deleted successfully', HttpStatus.OK);
+    } catch (error) {
+      if (!isCommitted) {
+        await transaction.rollback();
+      }
+      throw new HttpException('Error occured, could not delete order', HttpStatus.BAD_REQUEST);
     }
-    throw new HttpException('Order deleted successfully', HttpStatus.OK);
   }
 
   async findAllOrders(params: GetOrderParamsDto): Promise<Order[]> {

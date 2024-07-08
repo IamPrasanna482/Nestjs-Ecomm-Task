@@ -61,12 +61,28 @@ let OrderRepository = class OrderRepository {
             throw error;
         }
     }
-    async deleteOrder(id) {
-        const result = await this.orderModel.destroy({ where: { id } });
-        if (!result) {
-            throw new common_1.HttpException('Order not found', common_1.HttpStatus.NOT_FOUND);
+    async deleteOrder(orderId) {
+        const transaction = await this.sequelize.transaction();
+        let isCommitted = false;
+        try {
+            const order = await this.orderModel.findByPk(orderId);
+            if (!order)
+                throw new common_1.NotFoundException('Order not found');
+            await this.orderProductModel.destroy({
+                where: { order_id: orderId },
+                transaction,
+            });
+            await order.destroy({ transaction });
+            await transaction.commit();
+            isCommitted = true;
+            throw new common_1.HttpException('Order deleted successfully', common_1.HttpStatus.OK);
         }
-        throw new common_1.HttpException('Order deleted successfully', common_1.HttpStatus.OK);
+        catch (error) {
+            if (!isCommitted) {
+                await transaction.rollback();
+            }
+            throw new common_1.HttpException('Error occured, could not delete order', common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async findAllOrders(params) {
         return this.orderModel.findAll({
