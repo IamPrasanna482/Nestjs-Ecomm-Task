@@ -1,7 +1,16 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Product } from './product.model';
-import { CreateProductDto, GetProductBySellerDto } from './dto/product.dto';
+import {
+  CreateProductDto,
+  GetProductBySellerDto,
+  GetProductsDto,
+} from './dto/product.dto';
 import { ProductRepository } from './product.repository';
 import { UserRepository } from '../user/user.repository';
 import { User } from '../user/user.model';
@@ -26,20 +35,25 @@ export class ProductService {
     return this.productRepository.createProduct(productInfo);
   }
 
-
   async findAll(
-    page: number,
-    limit: number,
-    queryParams: GetProductBySellerDto,
-  ): Promise<{ rows: Product[]; count: number }> {
-    const user = this.userRepository.findByPk(queryParams.seller_id);
-    if((await user).role != 'seller'){
-        throw new HttpException(
-          'Only sellers can access their products !',
-          HttpStatus.BAD_REQUEST,
-        );
-    }
-    else return this.productRepository.getAllProducts(page, limit, queryParams);
+    queryParams: GetProductsDto,
+  ){
+    // const user = this.userRepository.findByPk(queryParams.);
+    // if ((await user).role != 'seller') {
+    //   throw new HttpException(
+    //     'Only sellers can access their products !',
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // }
+    const { rating, price, name, stock, limit = 10, offset = 0 } = queryParams;
+    const queryOptions: any = {};
+    
+    if (rating) queryOptions.rating = rating;
+    if (price) queryOptions.price = price;
+    if (name) queryOptions.name = name;
+    if (stock) queryOptions.stock = stock;
+
+    return this.productRepository.getAllProducts(queryOptions, limit, offset);
   }
 
   async findOne(id: string): Promise<Product> {
@@ -54,8 +68,7 @@ export class ProductService {
     id: string,
     updateProductDto: Partial<CreateProductDto>,
   ): Promise<Product> {
-    
-    return this.productRepository.updateProduct(id,updateProductDto);
+    return this.productRepository.updateProduct(id, updateProductDto);
   }
 
   async remove(id: string): Promise<void> {

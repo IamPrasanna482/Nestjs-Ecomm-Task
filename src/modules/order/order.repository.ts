@@ -1,13 +1,21 @@
 // src/orders/order.repository.ts
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Order } from './order.model';
-import { CreateOrderDto, GetOrderParamsDto, updateOrderDto } from './dto/order.dto';
+import {
+  CreateOrderDto,
+  GetOrderParamsDto,
+  updateOrderDto,
+} from './dto/order.dto';
 import { Product } from '../product/product.model';
 import { User } from '../user/user.model';
 import { OrderProduct } from '../common/order-product.model';
 import { Sequelize } from 'sequelize-typescript';
-
 
 @Injectable()
 export class OrderRepository {
@@ -85,7 +93,10 @@ export class OrderRepository {
       if (!isCommitted) {
         await transaction.rollback();
       }
-      throw new HttpException('Error occured, could not delete order', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Error occured, could not delete order',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -95,14 +106,16 @@ export class OrderRepository {
       include: [
         {
           model: User,
-          attributes: ['user_id', 'full_name', 'email'], // Specify user attributes you want to include
+          attributes: ['user_id', 'full_name', 'email'],
         },
         {
           model: Product,
-          through: { attributes: [] }, // This ensures that only Product attributes are returned
-          attributes: ['id', 'name', 'price'], // Specify product attributes you want to include
+          through: { attributes: [] }, 
+          attributes: ['id', 'name', 'price'],
         },
       ],
+      limit: params.limit,
+      offset: params.offset
     });
   }
   async findOrder(id: number): Promise<Order> {

@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './product.model';
-import { CreateProductDto, GetProductBySellerDto } from './dto/product.dto';
+import { CreateProductDto, GetProductBySellerDto, GetProductsDto } from './dto/product.dto';
 import { query } from 'express';
 
 @Controller('products')
@@ -40,11 +40,9 @@ export class ProductController {
   // Endpoint to get all products
   @Get()
   async findAll(
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
-    @Query() queryParams: GetProductBySellerDto,
-  ): Promise<{ rows: Product[]; count: number }> {
-    return this.productService.findAll(page, limit, queryParams);
+    @Query() queryParams: GetProductsDto,
+  ) {
+    return this.productService.findAll(queryParams);
   }
 
   // Endpoint to get a product by id

@@ -13,20 +13,23 @@ export class UserService {
     private readonly UserRepository: UserRepository,
   ) {}
 
+  // create user function to create a user
   async createUser(user: CreateUserDto) {
-    // const user  = await this.UserRepository.findbyEmail(user.email);
 
+    // hash the password using bcrypt
     const pw = user.password;
-    const hashedPW = await bcrypt.hash(pw, 5); // bcrypt returns a promise, hence we user await to resolve it
+    const hashedPW = await bcrypt.hash(pw, 5); 
     user.password = hashedPW;
 
     return await this.UserRepository.createUser(user);
   }
 
+  // delete a user 
   async deleteUser(userId: string): Promise<void> {
     return await this.UserRepository.deleteUser(userId);
   }
 
+  // get all users from DB
   async getAllUsers(params: GetUserParamsDto) {
     const {
       full_name,

@@ -98,6 +98,8 @@ let OrderRepository = class OrderRepository {
                     attributes: ['id', 'name', 'price'],
                 },
             ],
+            limit: params.limit,
+            offset: params.offset
         });
     }
     async findOrder(id) {

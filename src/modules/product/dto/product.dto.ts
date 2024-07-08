@@ -36,3 +36,32 @@ export class GetProductBySellerDto{
   @IsNumber()
   rating: number
 }
+
+export class GetProductsDto {
+
+  @IsUUID()
+  @IsOptional()
+  product_id: string;
+
+  @IsString()
+  @IsOptional()
+  name: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  price: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  stock: number;
+
+  @IsOptional()
+  @IsNumber()
+  rating?: number;
+
+  @IsOptional()
+  limit: number;
+
+  @IsOptional()
+  offset: number;
+}

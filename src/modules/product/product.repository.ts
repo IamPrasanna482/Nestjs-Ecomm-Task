@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Product } from './product.model';
-import { CreateProductDto } from './dto/product.dto';
+import { CreateProductDto, GetProductsDto } from './dto/product.dto';
 import { UserRepository } from '../user/user.repository';
 
 @Injectable()
@@ -16,14 +16,13 @@ export class ProductRepository {
     return await Product.create(product);
   }
 
-  async getAllProducts(page, limit, queryParams) {
-    return await Product.findAndCountAll({
-      offset: (page - 1) * limit,
-      limit,
-      where:{
-        rating : queryParams.rating
-      }
+  async getAllProducts(queryOptions?:any,limit?:number,offset?:number) {
+    const products = await Product.findAll({
+      where: queryOptions,
+      offset: offset,
+      limit: limit,
     });
+    return products;
   }
 
   async updateProduct(
@@ -50,7 +49,7 @@ export class ProductRepository {
     }
   }
 
-  async findProduct(id:string){
+  async findProduct(id: string) {
     return Product.findByPk(id);
   }
 }

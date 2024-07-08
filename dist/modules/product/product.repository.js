@@ -25,14 +25,13 @@ let ProductRepository = class ProductRepository {
     async createProduct(product) {
         return await product_model_1.Product.create(product);
     }
-    async getAllProducts(page, limit, queryParams) {
-        return await product_model_1.Product.findAndCountAll({
-            offset: (page - 1) * limit,
-            limit,
-            where: {
-                rating: queryParams.rating
-            }
+    async getAllProducts(queryOptions, limit, offset) {
+        const products = await product_model_1.Product.findAll({
+            where: queryOptions,
+            offset: offset,
+            limit: limit,
         });
+        return products;
     }
     async updateProduct(id, updateProductDto) {
         const product = await product_model_1.Product.findByPk(id);

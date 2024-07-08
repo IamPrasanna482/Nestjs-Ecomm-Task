@@ -33,13 +33,18 @@ let ProductService = class ProductService {
     async createProduct(productInfo) {
         return this.productRepository.createProduct(productInfo);
     }
-    async findAll(page, limit, queryParams) {
-        const user = this.userRepository.findByPk(queryParams.seller_id);
-        if ((await user).role != 'seller') {
-            throw new common_1.HttpException('Only sellers can access their products !', common_1.HttpStatus.BAD_REQUEST);
-        }
-        else
-            return this.productRepository.getAllProducts(page, limit, queryParams);
+    async findAll(queryParams) {
+        const { rating, price, name, stock, limit = 10, offset = 0 } = queryParams;
+        const queryOptions = {};
+        if (rating)
+            queryOptions.rating = rating;
+        if (price)
+            queryOptions.price = price;
+        if (name)
+            queryOptions.name = name;
+        if (stock)
+            queryOptions.stock = stock;
+        return this.productRepository.getAllProducts(queryOptions, limit, offset);
     }
     async findOne(id) {
         const product = await this.productRepository.findProduct(id);

@@ -1,8 +1,10 @@
 import { User } from './user.model';
 import { CreateUserDto } from './dto/user.dto';
+import { Sequelize } from 'sequelize-typescript';
 export declare class UserRepository {
     private readonly userModel;
-    constructor(userModel: typeof User);
+    private readonly sequelize;
+    constructor(userModel: typeof User, sequelize: Sequelize);
     createUser(createUserDto: CreateUserDto): Promise<{
         msg: string;
         data: {

@@ -30,8 +30,8 @@ let ProductController = class ProductController {
             return this.productService.createProduct(product);
         }
     }
-    async findAll(page = 1, limit = 10, queryParams) {
-        return this.productService.findAll(page, limit, queryParams);
+    async findAll(queryParams) {
+        return this.productService.findAll(queryParams);
     }
     async findOne(id) {
         return this.productService.findOne(id);
@@ -53,11 +53,9 @@ __decorate([
 ], ProductController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('page')),
-    __param(1, (0, common_1.Query)('limit')),
-    __param(2, (0, common_1.Query)()),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number, product_dto_1.GetProductBySellerDto]),
+    __metadata("design:paramtypes", [product_dto_1.GetProductsDto]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "findAll", null);
 __decorate([

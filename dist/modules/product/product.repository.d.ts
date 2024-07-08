@@ -6,10 +6,7 @@ export declare class ProductRepository {
     private readonly userRepository;
     constructor(userModel: typeof Product, userRepository: UserRepository);
     createProduct(product: CreateProductDto): Promise<Product>;
-    getAllProducts(page: any, limit: any, queryParams: any): Promise<{
-        rows: Product[];
-        count: number;
-    }>;
+    getAllProducts(queryOptions?: any, limit?: number, offset?: number): Promise<Product[]>;
     updateProduct(id: string, updateProductDto: Partial<CreateProductDto>): Promise<Product>;
     deleteProduct(id: string): Promise<void>;
     findProduct(id: string): Promise<Product>;
